@@ -32,9 +32,9 @@ node {
       rc = command """\
         sfdx force:source:deploy\
           --checkonly\
-          --sourcepath=.\
+          --sourcepath .\
           --verbose\
-          --testlevel=${TEST_LEVEL}\
+          --testlevel ${TEST_LEVEL}\
       """
       if (rc != 0) {
         error 'Test deployment failed'
