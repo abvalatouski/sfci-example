@@ -12,7 +12,7 @@ node {
                 copy ci\\ant\\package.xml force-app\\main\\default &&\
                 ant -buildfile ci\\ant\\build.xml\
             """,
-            errorMessage: 'Test deployment failed'.
+            errorMessage: 'Test deployment failed',
         );
     }
 }
