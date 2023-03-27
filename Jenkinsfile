@@ -28,7 +28,7 @@ node {
       }
     }
 
-    state('Test Deployment') {
+    stage('Test Deployment') {
       rc = command """\
         sfdx force:source:deploy\
           --checkonly\
