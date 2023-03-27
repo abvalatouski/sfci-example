@@ -14,19 +14,27 @@ node {
   }
 
   withCredentials([file(credentialsId: SERVER_KEY_CREDENTALS_ID, variable: 'server_key_file')]) {
-    stage('Authorize DevHub') {
-      rc = command "sfdx auth:jwt:grant --instanceurl ${SF_INSTANCE_URL} --clientid ${SF_CONSUMER_KEY} --username ${SF_USERNAME} --jwtkeyfile ${server_key_file} --setdefaultdevhubusername --setalias HubOrg"
+    stage('Authorize') {
+      rc = command """\
+        sfdx auth:jwt:grant
+          --clientid ${SF_CONSUMER_KEY}\
+          --instanceurl ${SF_INSTANCE_URL}\
+          --jwtkeyfile ${server_key_file}\
+          --setdefaultdevhubusername\
+          --username ${SF_USERNAME}\
+      """
       if (rc != 0) {
-        error 'Salesforce dev hub org authorization failed.'
+        error 'Authorization failed'
       }
     }
   }
 }
 
 def command(script) {
+  script = script.stripIndent()
   if (isUnix()) {
-    return sh(returnStatus: true, script: script);
+    return sh(returnStatus: true, script: script)
   } else {
-    return bat(returnStatus: true, script: script);
+    return bat(returnStatus: true, script: script)
   }
 }
