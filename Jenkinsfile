@@ -9,9 +9,7 @@ node {
   def TEST_LEVEL='RunAllTestsInOrg'
   def SF_INSTANCE_URL = env.SF_INSTANCE_URL ?: "https://login.salesforce.com"
 
-  stage('checkout source') {
-    checkout scm
-  }
+  checkout scm
 
   withCredentials([file(credentialsId: SERVER_KEY_CREDENTALS_ID, variable: 'server_key_file')]) {
     stage('Authorization') {
