@@ -16,7 +16,7 @@ node {
   withCredentials([file(credentialsId: SERVER_KEY_CREDENTALS_ID, variable: 'server_key_file')]) {
     stage('Authorize') {
       rc = command """\
-        sfdx auth:jwt:grant
+        sfdx auth:jwt:grant\
           --clientid ${SF_CONSUMER_KEY}\
           --instanceurl ${SF_INSTANCE_URL}\
           --jwtkeyfile ${server_key_file}\
