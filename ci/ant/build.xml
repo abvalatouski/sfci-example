@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+    xmlns:sf="antlib:com.salesforce"
+    default="testDeployment"
+>
+    <property environment="env"/>
+    <target name="testDeployment">
+        <sf:deploy
+            checkonly="true"
+            deployRoot="force-app/main/default"
+            password="${env.SF_PASSWORD}${env.SF_SECURITY_TOKEN}"
+            serverUrl="${env.SF_INSTANCE_URL}"
+            username="${env.SF_USERNAME}"
+            testLevel="${env.SF_TEST_LEVEL}"
+        />
+    </target>
+</project>

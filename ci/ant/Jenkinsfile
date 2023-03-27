@@ -1,0 +1,29 @@
+#!groovy
+
+node {
+    stage('Checkout to HEAD') {
+        checkout(scm);
+    }
+
+    stage('Test Deployment') {
+        command(
+            script: """\
+                ci\\ant\\generate-manifest force-app\\main\\default ${env.SF_API_VERSION} >ci\\ant\\package.xml &&\
+                copy ci\\ant\\package.xml force-app\\main\\default &&\
+                ant -buildfile ci\\ant\\build.xml\
+            """,
+            errorMessage: 'Test deployment failed'.
+        );
+    }
+}
+
+def command(script, errorMessage) {
+    def exitCode = bat(
+        returnStatus: true,
+        returnStdout: true,
+        script: script,
+    );
+    if (exitCode != 0) {
+        error(errorMessage);
+    }
+}
