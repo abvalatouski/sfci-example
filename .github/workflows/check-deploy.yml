@@ -1,4 +1,4 @@
-name: "Check" Deploy
+name: \"Check\" Deploy
 on:
   push:
     branches:
@@ -6,11 +6,12 @@ on:
   pull_request:
     branches:
     - main
-  workflow_dispatch:
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Run a one-line script
-        run: echo Hello, world!
+      - name: Update package index
+        run: sudo apt update
+      - name: Install Node and NPM
+        run: sudo apt install nodejs npm
