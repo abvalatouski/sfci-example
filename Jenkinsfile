@@ -11,7 +11,7 @@ node {
     credentialsId: env.SERVER_KEY_CREDENTALS_ID,
     variable: 'JWT_KEY_FILE',
   )]) {
-    state('Authorization') {
+    stage('Authorization') {
       execute(
         command: """
           sfdx auth:jwt:grant\
