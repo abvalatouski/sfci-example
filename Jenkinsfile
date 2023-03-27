@@ -31,10 +31,9 @@ node {
 }
 
 def command(script) {
-  script = script.stripIndent()
-  if (isUnix()) {
-    return sh(returnStatus: true, script: script)
-  } else {
-    return bat(returnStatus: true, script: script)
-  }
+  bat(
+    returnStatus: true,
+    returnStdout: true,
+    script: script,
+  );
 }
