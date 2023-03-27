@@ -12,8 +12,8 @@ node {
     variable: 'JWT_KEY_FILE',
   )]) {
     stage('Authorization') {
-      execute(
-        command: """
+      command(
+        script: """
           sfdx auth:jwt:grant\
             --clientid ${env.SF_CONSUMER_KEY}\
             --instanceurl ${env.SF_INSTANCE_URL}\
@@ -24,8 +24,8 @@ node {
         errorMessage: 'Authorization failed',
       );
 
-      execute(
-        command: """
+      command(
+        script: """
           sfdx config:set\
             defaultusername=${env.SF_USERNAME}\
         """,
@@ -35,8 +35,8 @@ node {
   }
 
   stage('Test Deployment') {
-    execute(
-      command: """
+    command(
+      script: """
         sfdx force:source:deploy\
           --checkonly\
           --sourcepath .\
@@ -48,11 +48,11 @@ node {
   }
 }
 
-def execute(command, errorMessage) {
+def command(script, errorMessage) {
   def exitCode = bat(
     returnStatus: true,
     returnStdout: true,
-    script: command,
+    script: script,
   );
   if (exitCode != 0) {
     error(errorMessage);
