@@ -29,7 +29,7 @@ node {
     }
 
     state('Test Deployment') {
-      rc = """\
+      rc = command """\
         sfdx force:source:deploy\
           --checkonly\
           --sourcepath=.\
