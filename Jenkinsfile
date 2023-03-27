@@ -26,6 +26,14 @@ node {
       if (rc != 0) {
         error 'Authorization failed'
       }
+
+      rc = command """\
+        sfdx config:set\
+          defaultusername=${SF_USERNAME}\
+      """
+      if (rc != 0) {
+        error 'Failed to set default username'
+      }
     }
 
     stage('Test Deployment') {
