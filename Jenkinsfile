@@ -14,7 +14,7 @@ node {
   }
 
   withCredentials([file(credentialsId: SERVER_KEY_CREDENTALS_ID, variable: 'server_key_file')]) {
-    stage('Authorize') {
+    stage('Authorization') {
       rc = command """\
         sfdx auth:jwt:grant\
           --clientid ${SF_CONSUMER_KEY}\
@@ -25,6 +25,19 @@ node {
       """
       if (rc != 0) {
         error 'Authorization failed'
+      }
+    }
+
+    state('Test Deployment') {
+      rc = """\
+        sfdx force:source:deploy\
+          --checkonly\
+          --sourcepath=.\
+          --verbose\
+          --testlevel=${TEST_LEVEL}\
+      """
+      if (rc != 0) {
+        error 'Test deployment failed'
       }
     }
   }
