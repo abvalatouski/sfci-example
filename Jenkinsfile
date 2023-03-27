@@ -1,7 +1,5 @@
 #!groovy
 
-import groovy.json.JsonSlurperClassic
-
 node {
   stage('Checkout to HEAD') {
     checkout(scm);
