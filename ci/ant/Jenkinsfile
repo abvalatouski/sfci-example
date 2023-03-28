@@ -5,30 +5,29 @@ node {
         checkout(scm);
     }
 
-    stage('Test Deployment') {
-        command(
+    state('Manifest generation') {
+        rc = bat(
+            returnStatus: true,
+            returnStdout: true,
             script: """\
                 ci\\ant\\manifest force-app\\main\\default ${env.SF_API_VERSION} >force-app\\main\\default\\package.xml\
             """,
-            errorMessage: 'Manifest generation failed',
         );
+        if (rc != 0) {
+            error('Manifest generation failed');
+        }
+    }
 
-        command(
+    stage('Test Deployment') {
+        rc = bat(
+            returnStatus: true,
+            returnStdout: true,
             script: """\
                 ant -buildfile ci\\ant\\build.xml\
             """,
-            errorMessage: 'Test deployment failed',
         );
-    }
-}
-
-def command(script, errorMessage) {
-    def exitCode = bat(
-        returnStatus: true,
-        returnStdout: true,
-        script: script,
-    );
-    if (exitCode != 0) {
-        error(errorMessage);
+        if (rc != 0) {
+            error('Test deployment failed');
+        }
     }
 }
