@@ -26,37 +26,34 @@ node {
                 error('Authorization failed');
             }
 
-            command(
-                script: """
-                    sfdx config:set
-                        defaultusername=${env.SF_USERNAME}
+            rc = bat(
+                returnStatus: true,
+                returnStdout: true,
+                script: """\
+                    sfdx config:set\
+                        defaultusername=${env.SF_USERNAME}\
                 """,
-                errorMessage: 'Failed to set default username',
             );
+            if (rc != 0) {
+                error('Failed to set default username');
+            }
         }
     }
 
     stage('Test Deployment') {
-        command(
-            script: """
-                sfdx force:source:deploy
-                    --checkonly
-                    --sourcepath .
-                    --verbose
-                    --testlevel ${env.SF_TEST_LEVEL}
+        rc = bat(
+            returnStatus: true,
+            returnStdout: true,
+            script: """\
+                sfdx force:source:deploy\
+                    --checkonly\
+                    --sourcepath .\
+                    --verbose\
+                    --testlevel ${env.SF_TEST_LEVEL}\
             """,
-            errorMessage: 'Test deployment failed',
         );
-    }
-}
-
-def command(script, errorMessage) {
-    rc = bat(
-        returnStatus: true,
-        returnStdout: true,
-        script: script.replaceAll('[\r\n]', '').trim(),
-    );
-    if (rc != 0) {
-        error(errorMessage);
+        if (rc != 0) {
+            error('Test deployment failed');
+        }
     }
 }
