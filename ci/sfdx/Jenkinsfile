@@ -12,7 +12,7 @@ node {
         stage('Authorization') {
             command(
                 script: """
-                    sfdx auth:jwt:grant\
+                    sfdx auth:jwt:grant
                         --clientid ${env.SF_CONSUMER_KEY}
                         --instanceurl ${env.SF_INSTANCE_URL}
                         --jwtkeyfile ${JWT_KEY_FILE}
@@ -47,12 +47,12 @@ node {
 }
 
 def command(script, errorMessage) {
-    def exitCode = bat(
+    rc = bat(
         returnStatus: true,
         returnStdout: true,
         script: script.replaceAll('[\r\n]', '').trim(),
     );
-    if (exitCode != 0) {
+    if (rc != 0) {
         error(errorMessage);
     }
 }
