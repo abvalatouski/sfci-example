@@ -8,7 +8,13 @@ node {
     stage('Test Deployment') {
         command(
             script: """\
-                ci\\ant\\generate-manifest force-app\\main\\default ${env.SF_API_VERSION} >force-app\\main\\default\\package.xml &&\
+                ci\\ant\\manifest force-app\\main\\default ${env.SF_API_VERSION} >force-app\\main\\default\\package.xml\
+            """,
+            errorMessage: 'Manifest generation failed',
+        );
+
+        command(
+            script: """\
                 ant -buildfile ci\\ant\\build.xml\
             """,
             errorMessage: 'Test deployment failed',
