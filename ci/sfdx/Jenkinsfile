@@ -13,13 +13,13 @@ node {
             rc = bat(
                 returnStatus: true,
                 returnStdout: true,
-                script: """
-                    sfdx auth:jwt:grant
-                        --clientid ${env.SF_CONSUMER_KEY}
-                        --instanceurl ${env.SF_INSTANCE_URL}
-                        --jwtkeyfile ${JWT_KEY_FILE}
-                        --setdefaultdevhubusername
-                        --username ${env.SF_USERNAME}
+                script: """\
+                    sfdx auth:jwt:grant\
+                        --clientid ${env.SF_CONSUMER_KEY}\
+                        --instanceurl ${env.SF_INSTANCE_URL}\
+                        --jwtkeyfile ${JWT_KEY_FILE}\
+                        --setdefaultdevhubusername\
+                        --username ${env.SF_USERNAME}\
                 """,
             );
             if (rc != 0) {
