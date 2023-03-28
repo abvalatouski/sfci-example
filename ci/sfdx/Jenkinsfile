@@ -11,7 +11,7 @@ node {
     )]) {
         stage('Authorization') {
             command(
-                script: """
+                script: """\
                     sfdx auth:jwt:grant\
                         --clientid ${env.SF_CONSUMER_KEY}\
                         --instanceurl ${env.SF_INSTANCE_URL}\
@@ -23,7 +23,7 @@ node {
             );
 
             command(
-                script: """
+                script: """\
                     sfdx config:set\
                         defaultusername=${env.SF_USERNAME}\
                 """,
@@ -34,7 +34,7 @@ node {
 
     stage('Test Deployment') {
         command(
-            script: """
+            script: """\
                 sfdx force:source:deploy\
                     --checkonly\
                     --sourcepath .\
