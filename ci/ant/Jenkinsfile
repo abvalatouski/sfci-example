@@ -11,6 +11,9 @@ node {
                 git submodule update --init\
             """,
         );
+        if (rc != 0) {
+            error('Failed to initialize submodules')
+        }
     }
 
     stage('Test Deployment') {
