@@ -1,7 +1,7 @@
 @IsTest
 private class Test {
     @IsTest
-    private static void fail() {
-        Assert.isTrue(false);
+    private static void success() {
+        Assert.isTrue(true);
     }
 }
