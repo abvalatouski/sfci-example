@@ -3,6 +3,14 @@
 node {
     stage('Checkout to HEAD') {
         checkout(scm);
+
+        rc = bat(
+            returnStatus: true,
+            returnStdout: true,
+            script: """\
+                git submodule update --init\
+            """,
+        );
     }
 
     stage('Test Deployment') {
@@ -10,7 +18,7 @@ node {
             returnStatus: true,
             returnStdout: true,
             script: """\
-                submodules\\manifest\\manifest force-app\\main\\default /i
+                submodules\\manifest\\manifest force-app\\main\\default /i\
             """,
         );
         if (rc != 0) {
