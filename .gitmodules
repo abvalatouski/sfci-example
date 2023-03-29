@@ -1,0 +1,3 @@
+[submodule "submodules/manifest"]
+	path = submodules/manifest
+	url = https://github.com/abvalatouski/manifest

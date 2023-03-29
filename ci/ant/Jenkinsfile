@@ -10,7 +10,7 @@ node {
             returnStatus: true,
             returnStdout: true,
             script: """\
-                ci\\ant\\manifest force-app\\main\\default ${env.SF_API_VERSION} >force-app\\main\\default\\package.xml\
+                submodules\\manifest\\manifest force-app\\main\\default /i
             """,
         );
         if (rc != 0) {
